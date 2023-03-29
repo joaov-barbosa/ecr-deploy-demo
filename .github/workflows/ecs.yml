@@ -65,12 +65,12 @@ jobs:
        with:
           task-definition: task-definition.json
           container-name: hello-world-app
-          image: ${{ steps.build-image.outputs.name }}
+          image: ${{ steps.build-image.outputs.image }}
 
      - name: Deploy to Amazon ECS
        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
        with:
-           task-definition: task-definition.json
+           task-definition: ${{ steps.task-def.outputs.task-definition }}
            service: ${{ inputs.name-service }}
            cluster: ${{ inputs.name-cluster}}
            wait-for-service-stability: true
